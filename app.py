@@ -5,7 +5,7 @@ import os
 # --- Titre / mise en page ---
 st.set_page_config(page_title="Analyse de Sentiments", page_icon="🧠", layout="centered")
 st.title("🧠 Analyse de Sentiments (simple)")
-st.caption("Entrez un tweet ci-dessous pour savoir s'il est positif ou négatif.")
+st.caption("Entrez un tweet en anglais ci-dessous et obtenez une prédiction de sentiment (positif ou négatif) basée sur un modèle de machine learning.")
 
 # --- Wordcloud (output.png) en haut de page ---
 if os.path.exists("output.png"):
@@ -35,4 +35,4 @@ if st.button("Analyser"):
 
         sentiment = "😊 Positif" if prediction == 1 else "😞 Négatif"
         st.subheader(f"Résultat : {sentiment}")
-        st.write(f"Probabilité négatif : {proba[0]:.2f} | positif : {proba[1]:.2f}")
+        
