@@ -24,7 +24,7 @@ Streamlit Cloud (déploiement automatique)
 🌐 Déploiement
 
 L’application est hébergée sur Streamlit Cloud et accessible ici :
-👉 Lien de déploiement Streamlit
+👉 [Tester l’application ici](https://sentiment-analysis-twitter-jxvrcrrqygzjjnyehqv9sg.streamlit.app)
 
 💡 Objectif
 
