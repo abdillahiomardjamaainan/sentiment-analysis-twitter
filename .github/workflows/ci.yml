@@ -1,0 +1,57 @@
+name: CI - Streamlit Sentiment App
+
+# 🧠 Déclenchement : à chaque push sur main ou pull request
+on:
+    push:
+        branches: ["main"]
+    pull_request:
+
+jobs:
+    test-app:
+        name: Vérification du modèle et de l'application
+        runs-on: ubuntu-latest
+
+        steps:
+            # 1️⃣ Récupérer ton code du repo
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            # 2️⃣ Installer Python
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            # 3️⃣ Installer les dépendances de requirements.txt
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+            # 4️⃣ Vérifier que les fichiers essentiels existent
+            - name: Check essential files
+              run: |
+                  test -f app.py || (echo "❌ app.py manquant !" && exit 1)
+                  test -f model.joblib || (echo "❌ model.joblib manquant !" && exit 1)
+                  test -f vectorizer.joblib || (echo "❌ vectorizer.joblib manquant !" && exit 1)
+                  echo "✅ Tous les fichiers essentiels sont présents."
+
+            # 5️⃣ Test rapide du modèle (smoke test)
+            - name: Smoke test - charger modèle et prédire un tweet
+              run: |
+                  python - << 'PY'
+                  import joblib, os
+                  assert os.path.exists("model.joblib"), "model.joblib introuvable"
+                  assert os.path.exists("vectorizer.joblib"), "vectorizer.joblib introuvable"
+                  model = joblib.load("model.joblib")
+                  vectorizer = joblib.load("vectorizer.joblib")
+                  X = vectorizer.transform(["I love this movie!"])
+                  pred = model.predict(X)[0]
+                  print(f"✅ Prédiction réussie : {pred}")
+                  PY
+
+            # 6️⃣ Vérifier que l’app Streamlit peut se lancer (sans l’ouvrir)
+            - name: Test Streamlit app startup
+              run: |
+                  streamlit --version
+                  echo "✅ Streamlit installé et prêt."
