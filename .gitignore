@@ -1,0 +1,22 @@
+# Environnement Python
+venv/
+__pycache__/
+*.pyc
+
+# Notebooks temporaires
+.ipynb_checkpoints/
+
+# Données volumineuses
+*.csv
+*.xlsx
+*.json
+*.zip
+*.pkl
+
+# Modèles et sorties
+*.joblib
+*.h5
+*.log
+
+# Autres
+.DS_Store
