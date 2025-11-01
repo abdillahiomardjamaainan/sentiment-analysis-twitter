@@ -14,7 +14,6 @@ __pycache__/
 *.pkl
 
 # Modèles et sorties
-*.joblib
 *.h5
 *.log
 
